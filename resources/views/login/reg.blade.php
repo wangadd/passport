@@ -123,8 +123,11 @@
                 data:{name:name,email:email,password:password,re_pwd:re_pwd},
                 method:'POST',
                 success:function(msg){
-                    alert(msg);
-                    window.location="/login";
+                    alert(msg.msg);
+                    if(msg.code==1){
+                        window.location=""+msg.url+"";
+                    }
+
                 }
 
             })

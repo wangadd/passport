@@ -67,6 +67,7 @@
         </style>
     </head>
     <body>
+        <input type="hidden" id="url" value="{{$url}}">
         <div style="width:1200px; height:50px;"><h1 align="center">登录页面</h1></div>
         <div style="width:500px;height:500px; border:1px solid black; float: left;">
             <h1 align="center">欢迎登录</h1>
@@ -110,18 +111,19 @@
         });
         $('#login').click(function(){
             var email=$('#email').val();
+            var url=$('#url').val();
             var password=$('#password').val();
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 url:"/login",
-                data:{email:email,password:password},
+                data:{email:email,url:url,password:password},
                 method:'POST',
                 success:function(msg){
                     alert(msg.msg);
                     if(msg.code==1){
-                        window.location="http://kings.tactshan.com/menu";
+                        window.location=""+msg.url+"";
                     }
                 },
                 dataType:'json'

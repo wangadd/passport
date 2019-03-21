@@ -11,12 +11,13 @@ class LoginController extends Controller
 {
     //登录视图
     public function loginView(){
-
-        return view("login.login");
+        $url=$_GET['url'];
+        return view("login.login",['url'=>$url]);
     }
     public function doLogin(Request $request){
         $email=$request->input('email');
         $pwd=$request->input('password');
+        $url=$request->input('url');
         $where=[
             'email'=>$email
         ];
@@ -37,6 +38,7 @@ class LoginController extends Controller
             $info=[
                 'code'=>1,
                 'msg'=>'登录成功',
+                'url'=>$url
             ];
             echo json_encode($info);
             $key="token:".$userInfo->id;
@@ -52,12 +54,14 @@ class LoginController extends Controller
     }
     //注册视图
     public function regView(){
-        return view("login.reg");
+        $url=$_GET['url'];
+        return view("login.reg",['url'=>$url]);
     }
     //注册
     public function doReg(Request $request){
         $name=$request->input('name');
         $email=$request->input('email');
+        $url=$request->input('url');
         $re_pwd=$request->input('re_pwd');
         $pwd=$request->input('password');
         if($re_pwd!=$pwd) {
@@ -70,9 +74,25 @@ class LoginController extends Controller
         $data['email']=$email;
         $id=UserModel::insertGetId($data);
         if($id){
-            echo "注册成功";
+            $info=[
+                'code'=>1,
+                'msg'=>'注册成功',
+                'url'=>$url
+            ];
+            echo json_encode($info);
+            $key="token:".$id;
+            $token=substr(md5(time().rand(0,99999)),10,10);
+            setcookie('uid',$id,time()+60*60*24,'/','tactshan.com',false,true);
+            setcookie('token',$token,time()+86400,'/','tactshan.com',false,true);
+            Redis::set($key,$token);
+            Redis::expire($key,86400);
+
         }else{
-            echo "注册失败";
+            $info=[
+                'code'=>0,
+                'msg'=>'注册失败',
+            ];
+            echo json_encode($info);
         }
     }
 }
