@@ -5,26 +5,51 @@ namespace App\Http\Controllers\Login;
 use App\Model\UserModel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redis;
 
 class LoginController extends Controller
 {
     //登录视图
     public function loginView(){
-        return view("login.login");
+
+        $url=substr($_SERVER['HTTP_REFERER'],0,strlen($_SERVER['HTTP_REFERER'])-1).$_SERVER['DOCUMENT_URI'];
+        return view("login.login" ,['url'=>$url]);
     }
     public function doLogin(Request $request){
         $email=$request->input('email');
         $pwd=$request->input('password');
+        $url=$request->input('url');
         $where=[
             'email'=>$email
         ];
         $userInfo=UserModel::where($where)->first();
         if(empty($userInfo)){
-            echo "登录失败";
+            $info=[
+                'code'=>0,
+                'msg'=>'登录失败',
+            ];
+            echo json_encode($info);
         }elseif(md5($pwd)!=$userInfo['password']){
-            echo "登录失败";
+            $info=[
+                'code'=>0,
+                'msg'=>'登录失败',
+            ];
+            echo json_encode($info);
         }else{
-            echo "登录成功";
+            $info=[
+                'code'=>1,
+                'msg'=>'登录成功',
+            ];
+            echo json_encode($info);
+            $key="token:".$userInfo->id;
+            $token=substr(md5(time().rand(0,99999)),10,10);
+            setcookie('uid',$userInfo->id,time()+60*60*24,'/','tactshan.com',false,true);
+            setcookie('token',$token,time()+86400,'/','tactshan.com',false,true);
+            Redis::set($key,$token);
+            Redis::expire($key,86400);
+
+
+
         }
     }
     //注册视图

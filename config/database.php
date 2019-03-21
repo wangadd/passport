@@ -113,7 +113,7 @@ return [
 
     'redis' => [
 
-        'client' => env('REDIS_CLIENT', 'phppredis'),
+        'client' => env('REDIS_CLIENT', 'phpredis'),
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'predis'),

@@ -71,6 +71,7 @@
         <div style="width:500px;height:500px; border:1px solid black; float: left;">
             <h1 align="center">欢迎登录</h1>
             <div align="center" style="margin-top:150px;">
+                <input type="hidden" id="url" value="{{$url}}">
                 <p >
                     <font color="red">邮箱</font>： <input type="text" id="email">
                 </p>
@@ -110,18 +111,22 @@
         });
         $('#login').click(function(){
             var email=$('#email').val();
+            var url=$('#url').val();
             var password=$('#password').val();
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 url:"/login",
-                data:{email:email,password:password},
+                data:{email:email,url:url,password:password},
                 method:'POST',
                 success:function(msg){
-                    alert(msg);
-                    window.location="http://kings.tactshan.com/menu";
-                }
+                    alert(msg.msg);
+                    if(msg.code==1){
+                        window.location="http://lara.weixin.com/menu";
+                    }
+                },
+                dataType:'json'
 
             });
         })
