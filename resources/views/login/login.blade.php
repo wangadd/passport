@@ -110,14 +110,13 @@
         });
         $('#login').click(function(){
             var email=$('#email').val();
-            var url=$('#url').val();
             var password=$('#password').val();
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 url:"/login",
-                data:{email:email,url:url,password:password},
+                data:{email:email,password:password},
                 method:'POST',
                 success:function(msg){
                     alert(msg.msg);
