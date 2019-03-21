@@ -120,7 +120,7 @@
                 method:'POST',
                 success:function(msg){
                     alert(msg);
-                    window.location="http://lara.weixin.com/menu";
+                    window.location="http://kings.tactshan.com/menu";
                 }
 
             });
