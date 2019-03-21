@@ -71,7 +71,6 @@
         <div style="width:500px;height:500px; border:1px solid black; float: left;">
             <h1 align="center">欢迎登录</h1>
             <div align="center" style="margin-top:150px;">
-                <input type="hidden" id="url" value="{{$url}}">
                 <p >
                     <font color="red">邮箱</font>： <input type="text" id="email">
                 </p>
@@ -123,7 +122,7 @@
                 success:function(msg){
                     alert(msg.msg);
                     if(msg.code==1){
-                        window.location="http://lara.weixin.com/menu";
+                        window.location="http://kings.tactshan.com/menu";
                     }
                 },
                 dataType:'json'

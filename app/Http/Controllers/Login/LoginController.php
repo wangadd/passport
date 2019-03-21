@@ -12,13 +12,11 @@ class LoginController extends Controller
     //登录视图
     public function loginView(){
 
-        $url=substr($_SERVER['HTTP_REFERER'],0,strlen($_SERVER['HTTP_REFERER'])-1).$_SERVER['DOCUMENT_URI'];
-        return view("login.login" ,['url'=>$url]);
+        return view("login.login");
     }
     public function doLogin(Request $request){
         $email=$request->input('email');
         $pwd=$request->input('password');
-        $url=$request->input('url');
         $where=[
             'email'=>$email
         ];
