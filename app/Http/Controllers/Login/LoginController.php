@@ -11,7 +11,7 @@ class LoginController extends Controller
 {
     //登录视图
     public function loginView(){
-        $url=$_GET['url'];
+        $url=empty($_GET['url'])?'':$_GET['url'];
         return view("login.login",['url'=>$url]);
     }
     public function doLogin(Request $request){
@@ -54,7 +54,7 @@ class LoginController extends Controller
     }
     //注册视图
     public function regView(){
-        $url=$_GET['url'];
+        $url=empty($_GET['url'])?'':$_GET['url'];
         return view("login.reg",['url'=>$url]);
     }
     //注册
