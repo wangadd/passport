@@ -117,7 +117,7 @@
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                url:"/login",
+                url:"/pclogin",
                 data:{email:email,url:url,password:password},
                 method:'POST',
                 success:function(msg){
