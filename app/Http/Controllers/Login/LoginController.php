@@ -16,6 +16,7 @@ class LoginController extends Controller
     }
     public function doLogin(Request $request){
         $data=$_POST;
+        print_r($data);die;
         $where=[
             'email'=>$data['email']
         ];
