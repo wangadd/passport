@@ -15,11 +15,9 @@ class LoginController extends Controller
         return view("login.login",['url'=>$url]);
     }
     public function doLogin(Request $request){
-        $email=$request->input('email');
-        $pwd=$request->input('password');
-        $url=$request->input('url');
+        $data=$_POST;
         $where=[
-            'email'=>$email
+            'email'=>$data['email']
         ];
         $userInfo=UserModel::where($where)->first();
         if(empty($userInfo)){
@@ -28,25 +26,26 @@ class LoginController extends Controller
                 'msg'=>'登录失败',
             ];
             echo json_encode($info);
-        }elseif(md5($pwd)!=$userInfo['password']){
+        }elseif(md5($data['pwd'])!=$userInfo['password']){
             $info=[
                 'code'=>400002,
                 'msg'=>'登录失败',
             ];
             echo json_encode($info);
         }else{
-            $info=[
-                'code'=>1,
-                'msg'=>'登录成功',
-                'url'=>$url
-            ];
-            echo json_encode($info);
+
             $key="token:".$userInfo->id;
             $token=substr(md5(time().rand(0,99999)),10,10);
             setcookie('uid',$userInfo->id,time()+60*60*24,'/','tactshan.com',false,true);
             setcookie('token',$token,time()+86400,'/','tactshan.com',false,true);
             Redis::set($key,$token);
             Redis::expire($key,86400);
+            $info=[
+                'code'=>1,
+                'msg'=>'登录成功',
+                'token'=>$token
+            ];
+            echo json_encode($info);
 
 
 
