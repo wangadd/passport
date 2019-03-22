@@ -24,13 +24,13 @@ class LoginController extends Controller
         $userInfo=UserModel::where($where)->first();
         if(empty($userInfo)){
             $info=[
-                'code'=>0,
+                'code'=>40001,
                 'msg'=>'登录失败',
             ];
             echo json_encode($info);
         }elseif(md5($pwd)!=$userInfo['password']){
             $info=[
-                'code'=>0,
+                'code'=>400002,
                 'msg'=>'登录失败',
             ];
             echo json_encode($info);
@@ -95,4 +95,6 @@ class LoginController extends Controller
             echo json_encode($info);
         }
     }
+
+
 }
