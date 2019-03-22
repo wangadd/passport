@@ -52,6 +52,46 @@ class LoginController extends Controller
 
         }
     }
+    public function pcLogin(Request $request){
+        $email=$request->input('email');
+        $url=$request->input('url');
+        $pwd=$request->input('password');
+        $where=[
+            'email'=>$email
+        ];
+        $userInfo=UserModel::where($where)->first();
+        if(empty($userInfo)){
+            $info=[
+                'code'=>40001,
+                'msg'=>'登录失败',
+            ];
+            echo json_encode($info);
+        }elseif(md5($pwd)!=$userInfo['password']){
+            $info=[
+                'code'=>40002,
+                'msg'=>'登录失败',
+            ];
+            echo json_encode($info);
+        }else{
+
+            $key="token:".$userInfo->id;
+            $token=substr(md5(time().rand(0,99999)),10,10);
+            setcookie('uid',$userInfo->id,time()+60*60*24,'/','tactshan.com',false,true);
+            setcookie('token',$token,time()+86400,'/','tactshan.com',false,true);
+            Redis::set($key,$token);
+            Redis::expire($key,86400);
+            $info=[
+                'code'=>1,
+                'msg'=>'登录成功',
+                'url'=>$url,
+                'token'=>$token
+            ];
+            echo json_encode($info);
+
+
+
+        }
+    }
     //注册视图
     public function regView(){
         $url=empty($_GET['url'])?'':$_GET['url'];

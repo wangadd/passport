@@ -17,6 +17,7 @@ Route::get('/', function () {
 //登录
 Route::get('/login',"Login\LoginController@loginView");
 Route::post('/login',"Login\LoginController@doLogin");
+Route::post('/pclogin',"Login\LoginController@pcLogin");
 //注册
 Route::get('/reg',"Login\LoginController@regView");
 Route::post('/reg',"Login\LoginController@doReg");
