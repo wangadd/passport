@@ -16,7 +16,7 @@ class LoginController extends Controller
     }
     public function doLogin(Request $request){
         $data=$_POST;
-        print_r($data);die;
+        $pwd=$data['pwd'];
         $where=[
             'email'=>$data['email']
         ];
@@ -27,9 +27,9 @@ class LoginController extends Controller
                 'msg'=>'登录失败',
             ];
             echo json_encode($info);
-        }elseif(md5($data['pwd'])!=$userInfo['password']){
+        }elseif(md5($pwd)!=$userInfo['password']){
             $info=[
-                'code'=>400002,
+                'code'=>40002,
                 'msg'=>'登录失败',
             ];
             echo json_encode($info);
