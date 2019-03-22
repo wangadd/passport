@@ -21,7 +21,6 @@ class LoginController extends Controller
             'email'=>$data['email']
         ];
         $userInfo=UserModel::where($where)->first();
-        print_r($userInfo);
         if(empty($userInfo)){
             $info=[
                 'code'=>40001,
