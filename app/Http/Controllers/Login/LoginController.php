@@ -141,10 +141,9 @@ class LoginController extends Controller
     public function pcQuit(){
         $uid=$_GET['uid'];
         $key='token:pc:'.$uid;
-        Redis::pull($key);
+        $token=Redis::del($key);
         setcookie('token',$_COOKIE['token'],time()-1,'/','tactshan.com',false,true);
-        $token=Redis::get($key);
-        if(empty($token)){
+        if($token){
             echo "退出成功";
         }else{
             echo "退出失败";
