@@ -34,7 +34,6 @@ class LoginController extends Controller
             ];
             echo json_encode($info);
         }else{
-
             $key="token:app:".$userInfo->id;
             $token=substr(md5(time().rand(0,99999)),10,10);
             setcookie('uid',$userInfo->id,time()+60*60*24,'/','tactshan.com',false,true);
@@ -141,13 +140,9 @@ class LoginController extends Controller
     public function pcQuit(){
         $uid=$_GET['uid'];
         $key='token:pc:'.$uid;
-        $token=Redis::del($key);
-        setcookie('token',$_COOKIE['token'],time()-1,'/','tactshan.com',false,true);
-        if($token){
-            echo "退出成功";
-        }else{
-            echo "退出失败";
-        }
+        Redis::del($key);
+        setcookie('token',$_COOKIE['token'],time()-3600,'/','tactshan.com',false,true);
+        echo "退出成功";
     }
 
 }
