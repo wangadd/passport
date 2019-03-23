@@ -38,7 +38,7 @@ class LoginController extends Controller
             $token=substr(md5(time().rand(0,99999)),10,10);
             setcookie('uid',$userInfo->id,time()+60*60*24,'/','tactshan.com',false,true);
             setcookie('token',$token,time()+86400,'/','tactshan.com',false,true);
-            Redis::set($key,$token);
+            Redis::hset('token',$key,$token);
             Redis::expire($key,86400);
             $info=[
                 'code'=>1,
@@ -77,7 +77,7 @@ class LoginController extends Controller
             $token=substr(md5(time().rand(0,99999)),10,10);
             setcookie('uid',$userInfo->id,time()+60*60*24,'/','tactshan.com',false,true);
             setcookie('token',$token,time()+86400,'/','tactshan.com',false,true);
-            Redis::set($key,$token);
+            Redis::hset('token',$key,$token);
             Redis::expire($key,86400);
             $info=[
                 'code'=>1,
@@ -123,7 +123,7 @@ class LoginController extends Controller
             $token=substr(md5(time().rand(0,99999)),10,10);
             setcookie('uid',$id,time()+60*60*24,'/','tactshan.com',false,true);
             setcookie('token',$token,time()+86400,'/','tactshan.com',false,true);
-            Redis::set($key,$token);
+            Redis::hset('token',$key,$token);
             Redis::expire($key,86400);
 
         }else{
@@ -140,7 +140,8 @@ class LoginController extends Controller
     public function pcQuit(Request $request){
         $uid=$_GET['uid'];
         $key='token:pc:'.$uid;
-        Redis::del($key);
+        Redis::hdel('token',$key);
+        setcookie('uid','',time()-3600,'/','tactshan.com',false,true);
         setcookie('token','',time()-3600,'/','tactshan.com',false,true);
         echo "退出成功";
         header("refresh:2;url='http://kings.tactshan.com'");
