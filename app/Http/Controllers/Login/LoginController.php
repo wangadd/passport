@@ -138,7 +138,7 @@ class LoginController extends Controller
 
     //pc退出
     public function pcQuit(Request $request){
-        $uid=$request->input('uid');
+        $uid=$_GET['uid'];
         $key='token:pc:'.$uid;
         Redis::del($key);
         setcookie('token','',time()-3600,'/','tactshan.com',false,true);
