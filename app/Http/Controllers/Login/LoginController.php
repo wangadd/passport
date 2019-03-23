@@ -143,6 +143,7 @@ class LoginController extends Controller
         Redis::del($key);
         setcookie('token','',time()-3600,'/','tactshan.com',false,true);
         echo "退出成功";
+        header("refresh:2;url='/'");
     }
 
 }
