@@ -141,7 +141,7 @@ class LoginController extends Controller
         $uid=$_GET['uid'];
         $key='token:pc:'.$uid;
         Redis::del($key);
-        setcookie('token',$_COOKIE['token'],time()-3600,'/','tactshan.com',false,true);
+        setcookie('token','',time()-3600,'/','tactshan.com',false,true);
         echo "退出成功";
     }
 
