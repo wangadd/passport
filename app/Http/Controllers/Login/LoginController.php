@@ -35,7 +35,7 @@ class LoginController extends Controller
             echo json_encode($info);
         }else{
 
-            $key="token:pc:".$userInfo->id;
+            $key="token:app:".$userInfo->id;
             $token=substr(md5(time().rand(0,99999)),10,10);
             setcookie('uid',$userInfo->id,time()+60*60*24,'/','tactshan.com',false,true);
             setcookie('token',$token,time()+86400,'/','tactshan.com',false,true);
@@ -74,7 +74,7 @@ class LoginController extends Controller
             echo json_encode($info);
         }else{
 
-            $key="token:app:".$userInfo->id;
+            $key="token:pc:".$userInfo->id;
             $token=substr(md5(time().rand(0,99999)),10,10);
             setcookie('uid',$userInfo->id,time()+60*60*24,'/','tactshan.com',false,true);
             setcookie('token',$token,time()+86400,'/','tactshan.com',false,true);
