@@ -43,7 +43,8 @@ class LoginController extends Controller
             $info=[
                 'code'=>1,
                 'msg'=>'登录成功',
-                'token'=>$token
+                'token'=>$token,
+                'uid'=>$userInfo->id
             ];
             echo json_encode($info);
 
