@@ -21,3 +21,8 @@ Route::post('/pclogin',"Login\LoginController@pcLogin");
 //注册
 Route::get('/reg',"Login\LoginController@regView");
 Route::post('/reg',"Login\LoginController@doReg");
+
+
+
+//退出
+Route::get('/loginout','Login/LoginController@pcQuit');

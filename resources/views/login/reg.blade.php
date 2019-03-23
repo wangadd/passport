@@ -128,7 +128,8 @@
                         window.location=""+msg.url+"";
                     }
 
-                }
+                },
+                dataType:'json'
 
             })
         })
