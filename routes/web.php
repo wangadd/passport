@@ -25,4 +25,4 @@ Route::post('/reg',"Login\LoginController@doReg");
 
 
 //退出
-Route::get('/loginout','Login/LoginController@pcQuit');
+Route::get('/loginout','Login\LoginController@pcQuit');
